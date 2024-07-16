@@ -26,7 +26,6 @@ jobs:
       - name: Run the CodeLogic Scan
         uses: CodeLogicIncEngineering/codelogic-dotnet-agent-github-action@integration
         with:
-          version: latest
           codelogic_host: ${{ vars.CODELOGIC_HOST }}
           agent_uuid: ${{ secrets.AGENT_UUID }}
           agent_password: ${{ secrets.AGENT_PASSWORD }}
