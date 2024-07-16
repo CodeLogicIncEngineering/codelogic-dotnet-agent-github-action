@@ -1,6 +1,9 @@
 name: 'CodeLogic .Net Agent'
 description: 'Scans .Net artifacts into your '
 
+branding:
+  icon: 'share-2'
+  color: 'blue'
 
 inputs:
   codelogic_host:
