@@ -22,31 +22,20 @@ inputs:
     description: 'The name of the scan space that the data will be saved to. If specified, a ScanSpace with this name will be created if not found. If not specified, information will be saved to the default ScanSpace.'
     required: false
   scan_path:
-    description: 'The path of the file and folder to scan. Must start with /github/workspace/'
+    description: 'The path of the file or directory to scan. Must start with /github/workspace/'
     default: "/github/workspace"
     required: false
-  scan_path_depth:
-    description: 'During scanning, this value will be used as the depth of subdirectories to traverse before stopping.'
-    default: '500'
-    required: false
-  recursive_filter:
-    description: 'Filters scanning to only those filenames that contain the given string.'
+  include_filter:
+    description: 'Include file path filters (repeatable via comma-separated values). Maps to --include.'
     required: false
   exclusion_filter:
-    description: 'Excludes directories and filenames that contain the given string from being scanned.'
+    description: 'Exclude file path filters. Maps to --exclude / -x.'
     required: false
-  reference_path:
-    description: 'Path to recursively search for assembly references.'
-    required: false
-  method_filter:
-    description: 'A substring of namespace prefixes that should be included in method-invokes-method relationships.'
+  namespace_filter:
+    description: 'Namespace include filter(s). Maps to --namespace. Comma-separated for multiple values.'
     required: false
   database_identities:
-    description: 'A database identity to use in the creation of relationships.'
-    required: false
-  show_compiler_generated:
-    description: 'Will not show compiler generated code in resulting graph.'
-    default: 'false'
+    description: 'Database identity or connection target(s) for remote SQL parse. Maps to --database.'
     required: false
   force_rescan:
     description: 'Forces the agent to rescan already scanned artifacts.'
@@ -62,17 +51,13 @@ runs:
   using: 'docker'
   image: docker://public.ecr.aws/codelogic.com/codelogic_dotnet:latest
   args: [
-    "analyze",
     "-p=${{ inputs.scan_path }}",
     "-a=${{ inputs.application_name }}",
-    "--depth=${{ inputs.scan_path_depth }}",
     "${{ inputs.scan_space != null && format('-s={0}', inputs.scan_space) || null }}",
-    "${{ inputs.recursive_filter != null && format('-f={0}', inputs.recursive_filter) || null }}",
+    "${{ inputs.include_filter != null && format('--include={0}', inputs.include_filter) || null }}",
     "${{ inputs.exclusion_filter != null && format('-x={0}', inputs.exclusion_filter) || null }}",
-    "${{ inputs.reference_path != null && format('--ref-path {0}', inputs.reference_path) || null }}",
-    "${{ inputs.method_filter != null && format('-m={0}', inputs.method_filter) || null }}",
-    "${{ inputs.database_identities != null && format('-d={0}', inputs.database_identities) || null }}",
-    "${{ inputs.show_compiler_generated == 'true' && '--show-compiler-generated' || null }}",
+    "${{ inputs.namespace_filter != null && format('--namespace={0}', inputs.namespace_filter) || null }}",
+    "${{ inputs.database_identities != null && format('--database={0}', inputs.database_identities) || null }}",
     "${{ inputs.force_rescan == 'true' && '--rescan' || null }}",
     "${{ inputs.expunge_scan_sessions == 'true' && '-e' || null }}"
   ]
@@ -80,4 +65,3 @@ runs:
     CODELOGIC_HOST: ${{ inputs.codelogic_host }}
     AGENT_UUID: ${{ inputs.agent_uuid }}
     AGENT_PASSWORD: ${{ inputs.agent_password }}
-
