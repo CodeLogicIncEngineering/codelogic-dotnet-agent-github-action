@@ -24,7 +24,7 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v4
       - name: Run the CodeLogic Scan
-        uses: CodeLogicIncEngineering/codelogic-dotnet-agent-github-action@integration
+        uses: CodeLogicIncEngineering/codelogic-dotnet-agent-github-action@v1
         with:
           codelogic_host: ${{ vars.CODELOGIC_HOST }}
           agent_uuid: ${{ secrets.AGENT_UUID }}
