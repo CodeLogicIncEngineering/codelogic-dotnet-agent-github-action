@@ -27,7 +27,7 @@ jobs:
         uses: CodeLogicIncEngineering/codelogic-dotnet-agent-github-action@v1
         with:
           codelogic_host: ${{ vars.CODELOGIC_HOST }}
-          agent_uuid: ${{ secrets.AGENT_UUID }}
+          agent_uuid: ${{ vars.AGENT_UUID }}
           agent_password: ${{ secrets.AGENT_PASSWORD }}
           application_name: MyApplication
           scan_space: default
