@@ -1,16 +1,16 @@
-name: 'CodeLogic .Net Agent'
-description: 'Scans .Net artifacts into your '
+name: 'Lineai .Net Agent'
+description: 'Scans .Net artifacts into your Lineai server.'
 
 branding:
   icon: 'share-2'
   color: 'blue'
 
 inputs:
-  codelogic_host:
-    description: 'The host address of the CodeLogic instance without the "/codelogic/ui/" part.'
+  lineai_host:
+    description: 'The host address of the Lineai instance without the "/codelogic/ui/" part.'
     required: true
   agent_uuid:
-    description: 'The UUID of the Agent in CodeLogic.'
+    description: 'The UUID of the Agent in Lineai.'
     required: true
   agent_password:
     description: 'The password for the agent.'
@@ -49,7 +49,7 @@ inputs:
 
 runs:
   using: 'docker'
-  image: docker://public.ecr.aws/codelogic.com/codelogic_dotnet:latest
+  image: docker://lineaipublic.azurecr.io/lineai_dotnet:latest
   args: [
     "-p=${{ inputs.scan_path }}",
     "-a=${{ inputs.application_name }}",
@@ -62,6 +62,8 @@ runs:
     "${{ inputs.expunge_scan_sessions == 'true' && '-e' || null }}"
   ]
   env:
-    CODELOGIC_HOST: ${{ inputs.codelogic_host }}
+    # Agent images still read CODELOGIC_HOST; also export LINEAI_HOST for newer tooling.
+    CODELOGIC_HOST: ${{ inputs.lineai_host }}
+    LINEAI_HOST: ${{ inputs.lineai_host }}
     AGENT_UUID: ${{ inputs.agent_uuid }}
     AGENT_PASSWORD: ${{ inputs.agent_password }}

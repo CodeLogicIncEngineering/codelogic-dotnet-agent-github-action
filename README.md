@@ -1,12 +1,12 @@
 ## About
 
-GitHub Action to scan .Net artifacts into a CodeLogic server using the CodeLogic .Net Agent (NetCapePro via the `codelogic_dotnet` Docker image).
+GitHub Action to scan .Net artifacts into a Lineai server using the Lineai .Net Agent (`lineaipublic.azurecr.io/lineai_dotnet`).
 
 
 ### Example
 
 ```yaml
-name: codelogic-scan
+name: lineai-scan
 
 on:
   push:
@@ -16,17 +16,17 @@ on:
   workflow_dispatch:
     
 jobs:
-  codelogic-scan:
-    name: Perform CodeLogic Scan
-    environment: CodeLogic Scan Env
+  lineai-scan:
+    name: Perform Lineai Scan
+    environment: Lineai Scan Env
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
-      - name: Run the CodeLogic Scan
-        uses: CodeLogicIncEngineering/codelogic-dotnet-agent-github-action@v1
+      - name: Run the Lineai Scan
+        uses: lineai-intelligence/lineai-dotnet-agent-github-action@v1
         with:
-          codelogic_host: ${{ vars.CODELOGIC_HOST }}
+          lineai_host: ${{ vars.LINEAI_HOST }}
           agent_uuid: ${{ vars.AGENT_UUID }}
           agent_password: ${{ secrets.AGENT_PASSWORD }}
           application_name: MyApplication
@@ -41,8 +41,8 @@ jobs:
 
 | Name                      | Type    | Description                                                                                                                                                                                             |
 |---------------------------|---------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `codelogic_host`          | String  | The host address of the CodeLogic instance without the "/codelogic/ui/" part.                                                                                                                           |
-| `agent_uuid`              | String  | The UUID of the Agent in CodeLogic.                                                                                                                                                                     |
+| `lineai_host`             | String  | The host address of the Lineai instance without the "/codelogic/ui/" part.                                                                                                                              |
+| `agent_uuid`              | String  | The UUID of the Agent in Lineai.                                                                                                                                                                        |
 | `agent_password`          | String  | The password for the agent.                                                                                                                                                                             |
 | `application_name`        | String  | The Application node to create that will be the parent of all objects found in the scan.                                                                                                                | 
 | `scan_space`              | String  | The name of the scan space that the data will be saved to. If specified, a ScanSpace with this name will be created if not found. If not specified, information will be saved to the default ScanSpace. | 
