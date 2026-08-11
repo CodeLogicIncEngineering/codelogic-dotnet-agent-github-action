@@ -7,7 +7,7 @@ branding:
 
 inputs:
   lineai_host:
-    description: 'The host address of the Lineai instance (e.g. https://mycompany.lineai.net), with no path suffix — the agent appends the API mount point (/api) itself.'
+    description: 'The host address of the Lineai instance (e.g. https://mycompany.app.lineai.net), with no path suffix — the agent appends the API mount point (/api) itself.'
     required: true
   agent_uuid:
     description: 'The UUID of the Agent in Lineai.'
