@@ -62,8 +62,6 @@ runs:
     "${{ inputs.expunge_scan_sessions == 'true' && '-e' || null }}"
   ]
   env:
-    # Agent images still read CODELOGIC_HOST; also export LINEAI_HOST for newer tooling.
-    CODELOGIC_HOST: ${{ inputs.lineai_host }}
     LINEAI_HOST: ${{ inputs.lineai_host }}
     AGENT_UUID: ${{ inputs.agent_uuid }}
     AGENT_PASSWORD: ${{ inputs.agent_password }}
